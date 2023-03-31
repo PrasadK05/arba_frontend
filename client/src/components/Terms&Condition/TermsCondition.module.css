@@ -1,0 +1,34 @@
+.window {
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: absolute;
+  top: 15%;
+  left: 35%;
+  width: 30%;
+  z-index: 1000;
+  padding: 20px;
+}
+.child_window {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.conditins {
+  margin-top: 10px;
+}
+.btns {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.btn {
+  background-color: #00abc5;
+  color: #ffffff;
+  width: 120px;
+  height: 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

@@ -50,6 +50,7 @@
   border: none;
   outline: none;
   border-radius: 30px;
+  cursor: pointer;
 }
 .text2 {
   font-size: 18px;

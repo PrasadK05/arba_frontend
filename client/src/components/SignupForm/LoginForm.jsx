@@ -1,10 +1,53 @@
 import React, { useState } from "react";
 import styles from "./SignupForm.module.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginProcess } from "../../redux/auth/auth.action";
+
+let init = {
+  email: "",
+  password: "",
+};
 
 export default function LoginForm() {
+  const { loading } = useSelector((store) => store.auth);
   const [view, setView] = useState(false);
+  const [log, setLog] = useState(init);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  let handleChange = (e) => {
+    let { name, value } = e.target;
+    setLog({ ...log, [name]: value });
+  };
+
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    let reg =
+      /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+    if (!reg.test(log.email)) {
+      alert("provide correct email");
+      return;
+    }
+
+    dispatch(loginProcess(log))
+      .then((res) => {
+        if (res) {
+          alert("login successful");
+          navigate("/")
+        } else {
+          alert("login unsuccessful");
+        }
+        setLog(init);
+      })
+      .catch((err) => {
+        alert("login unsuccessful");
+        setLog(init);
+      });
+  };
+
+  let { password, email } = log;
   return (
     <div className={styles.box}>
       <div className={styles.child}>
@@ -14,14 +57,16 @@ export default function LoginForm() {
           Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </p>
         <div className={styles.form_div}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.input_div}>
               <input
-                type="text"
-                name="userName"
-                id="userName"
+                type="email"
+                name="email"
+                id="email"
                 className={styles.input}
-                placeholder="User Name"
+                placeholder="Email"
+                value={email}
+                onChange={handleChange}
               />
             </div>
             <div className={styles.input_div}>
@@ -31,6 +76,8 @@ export default function LoginForm() {
                 id="password"
                 className={styles.input}
                 placeholder="Password"
+                value={password}
+                onChange={handleChange}
               />
               {view ? (
                 <AiFillEye onClick={() => setView(!view)} />
@@ -38,7 +85,12 @@ export default function LoginForm() {
                 <AiFillEyeInvisible onClick={() => setView(!view)} />
               )}
             </div>
-            <input type="submit" placeholder="Submit" className={styles.btn} />
+            <input
+              type="submit"
+              placeholder="Submit"
+              value={loading ? "...Loading" : "Submit"}
+              className={styles.btn}
+            />
           </form>
         </div>
         <div className={styles.text2}>
