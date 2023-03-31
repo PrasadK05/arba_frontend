@@ -30,12 +30,22 @@ export const authReducer = (state = authInitalState, action) => {
       return {
         ...state,
         error: true,
+        data: {
+          token: "",
+          refreshtoken: "",
+          isAuthenticated: false,
+        },
       };
     }
     case AUTH_LOG_IN_LOADING: {
       return {
         ...state,
         loading: true,
+        data: {
+          token: "",
+          refreshtoken: "",
+          isAuthenticated: false,
+        },
       };
     }
     default: {

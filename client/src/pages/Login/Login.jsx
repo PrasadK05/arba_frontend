@@ -19,7 +19,7 @@ export default function Login() {
       dispatch(authLoginSucc({ token, refreshToken }));
       navigate("/");
     }
-  }, []);
+  },[]);
   return (
     <div className={styles.main}>
       <Sidebar />

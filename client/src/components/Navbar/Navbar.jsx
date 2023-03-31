@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../redux/profile/profile.action";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const [val, setVal] = useState(false);
+  const { user, loading, error } = useSelector((store) => store.profile);
+  const dispatch = useDispatch();
+
+  let token = Cookies.get("token");
+
+  useEffect(() => {
+    dispatch(getProfile(token))
+      .then((res) => {
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className={styles.nav}>
       <div className={styles.logo}>
@@ -18,7 +36,7 @@ export default function Navbar() {
           <p>0</p>
         </div>
         <img
-          src="https://cdn-icons-png.flaticon.com/128/236/236832.png"
+          src={user.avatar}
           alt="error"
           className={styles.img}
           onClick={() => setVal(!val)}
