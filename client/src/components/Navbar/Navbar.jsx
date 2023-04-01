@@ -14,13 +14,7 @@ export default function Navbar() {
   let token = Cookies.get("token");
 
   useEffect(() => {
-    dispatch(getProfile(token))
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(getProfile(token));
   }, []);
 
   return (

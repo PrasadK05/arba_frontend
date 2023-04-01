@@ -27,14 +27,14 @@ export const getProfile = (token) => async (dispatch) => {
   dispatch(profileLoad());
   
   try {
-    let res = await fetch("http://localhost:8080/profile/get-profile", {
+    let res = await fetch("https://rich-gray-sea-urchin-cuff.cyclic.app/profile/get-profile", {
       method: "GET",
       headers: {
         token,
       },
     });
     res = await res.json();
-    console.log(res);
+    
     if (res.status) {
       dispatch(profileSucc(res.result));
       return true;
@@ -43,10 +43,10 @@ export const getProfile = (token) => async (dispatch) => {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    alert("unable to load profile")
     dispatch(profileFail());
     return false;
   }
 };
 
-// https://rich-gray-sea-urchin-cuff.cyclic.app
+
